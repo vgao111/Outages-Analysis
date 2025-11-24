@@ -160,15 +160,23 @@ Clearly state your null and alternative hypotheses, your choice of test statisti
 
 Optional: Embed a visualization related to your hypothesis test in your website.
 
+In this hypothesis test, I will test whether the `OUTAGE.DURATION` is the same for high per capital gross state product (GSP) states and low per capita gross state product (GSP) states where I will define a state as a high per capita GSP state if its `PC.REALGSP.STATE` is greater than or equals to 50000. The test statistic I will be using in my hypothesis test will be the mean outage duration for LOW GSP states - mean outage duration for HIGH GSP states. My significance level will be at a standard 0.05.
 
+This will be my null and alternative hypotheses:
 
+**Null hypothesis**: On average, the outage duration is the same for high per capita GSP states and low GSP states
+**Alternative hypothesis**: On average, the outage duration is greater for low per capita real GSP states than for high per capita real GSP states
 
+**Here is a plot of my test:**
 
+<iframe
+  src="assets/hypothesis-test.html"
+  width="800"
+  height="600"
+  frameborder="0"
+></iframe>
 
-
-
-
-
+My observed TVD is 978.3 which seems to be on the extreme right end of the simulated TVDS. Since our p-value of 0.0005 is so small and is less than our significance level of 0.05, we reject the null hypothesis, meaning there is statisically significant evidence that point in favor of the alternative hypotheis, the fact that on average, the outage duration is greater for low per capita real GSP states than for high per capita real GSP states is more likely.
 
 
 # **Framing a Prediction Problem**
