@@ -97,11 +97,12 @@ This pivot table shows for each year, the average duration of major outages depe
 
 One of the columns that is likely NMAR is `DEMAND.LOSS.MW`. While some outages include the amount of electricity demand lost, many do not, and the missingness appears related to the unobserved true value of the column itself. 
 
-The reason why is Utilities often fail to record MW demand loss for outages that affect very few customers, because the impact is small and MW loss is not always measured for events that barely meet the threshold of a major outage. For example, some outage durations are 1 minute. Conversely, for extremely large outages, the MW loss may be difficult to measure precisely during the event, resulting in missing values for the biggest failures. In both situations, the likelihood that DEMAND.LOSS.MW is missing depends directly on the true (unreported MW loss value.
+The reason why is Utilities often fail to record MW demand loss for outages that affect very few customers, because the impact is small and MW loss is not always measured for events that barely meet the threshold of a major outage. For example, some outage durations are 1 minute. Conversely, for extremely large outages, the MW loss may be difficult to measure precisely during the event, resulting in missing values for the biggest failures. In both situations, the likelihood that DEMAND.LOSS.MW is missing depends directly on the true unreported MW loss value.
 
-To convert this missingness into something closer to MAR, we would need additional data about how MW loss is recorded. For example, knowing which utility reported each outage, what measurement equipment was used, and whether MW loss was estimated or manually entered would help determine if the missingness is MAR.
+To convert this missingness into something closer to **MAR**, we would need additional data about how MW loss is recorded. For example, knowing which utility reported each outage, what measurement equipment was used, and whether MW loss was estimated or manually entered would help determine if the missingness is **MAR**.
 
 **Missingness Dependency**
+
 
 **Does `OUTAGE.DURATION` missingness depend on `MONTH`?**
 
@@ -123,6 +124,10 @@ Here is the observed tvd paired against the simulated TVD under a permutation te
   frameborder="0"
 ></iframe>
 
+This plot shows that my observed TVD statistic was 0.223 with a p-value of 0.122. At this p-value, which is greater than 0.05, I will fail to reject the null hypothesis hypothesis
+meaning that there is a more likelihood of the distribution of MONTH being the same when OUTAGE.DURATION is missing vs not missing, therefore the missingness is most likely not **MAR**.
+
+
 **Does `DEMAND.LOSS.MW` missingness depend on `ANOMALY.LEVEL`?**
 
 Here is the distribution of `ANOMALY.LEVEL` Bins When `DEMAND.LOSS.MW` Missing vs Not Missing.
@@ -143,3 +148,28 @@ Here is the observed tvd paired against the simulated TVD under a permutation te
   height="600"
   frameborder="0"
 ></iframe>
+
+This plot shows that my observed TVD statistic was 0.092 with a p-value of 0.002. At this p-value, which is less than 0.05, I will reject the null hypothesis in favor of the alternative hypothesis
+meaning that there is a more likelihood of the distribution of anomalies being different when MW loss is missing vs not missing, there the missingness is most likely **MAR**.
+
+
+# **Hypothesis Testing**
+
+Clearly state your null and alternative hypotheses, your choice of test statistic and significance level, the resulting 
+-value, and your conclusion. Justify why these choices are good choices for answering the question you are trying to answer.
+
+Optional: Embed a visualization related to your hypothesis test in your website.
+
+
+
+
+
+
+
+
+
+
+
+
+# **Framing a Prediction Problem**
+
