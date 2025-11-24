@@ -36,6 +36,7 @@ The number of rows in this dataset is 1534, meaning from January 2000 to July 20
 
 # **Data Cleaning and Exploratory Data Analysis**
 
+
 ## **Data Cleaning**
 
 1. I started my data cleaning process by creating a copy of the original dataframe, in case If I make any mistakes along the way I can refer back to it again.
@@ -51,7 +52,9 @@ The number of rows in this dataset is 1534, meaning from January 2000 to July 20
 |   2012 | Minnesota    | severe weather     |              nan |                68200 | East North Central |            -0.1 |       6 |              2550 |      5380443 |           2279 |           18.2 |            2.14 |              51598 |          9.19 |           2606813 |          277627 | 2012-06-01 00:00:00 |
 |   2015 | Minnesota    | severe weather     |              250 |               250000 | East North Central |             1.2 |       7 |              1740 |      5489594 |           2279 |           18.2 |            2.14 |              54431 |         10.43 |           2673531 |          292023 | 2015-07-01 00:00:00 |
 
+
 ## **Exploratory Data Analysis**
+
 
 **Univariate Analysis**
 <iframe
@@ -62,6 +65,7 @@ The number of rows in this dataset is 1534, meaning from January 2000 to July 20
 ></iframe>
 
 This univariate plot shows the count of how much major outages occured across every `YEAR` from 2000 to 2016. You can observe that the year 2011 has the highest count of major outages across the US at 221 and the year 2000 has the lowest count of major outages at just 12 with most of the major outages concentrated in later years.
+
 
 **Bivariate Analysis**
 <iframe
@@ -75,9 +79,10 @@ This bivariate plot shows the average `OUTAGE.DURATION` per `CAUSE.CATEGORY`. We
 `OUTAGE.DURATION` at around 13,484 minutes and if it was islanding, it would have the lowest average `OUTAGE.DURATION` at around 200 minutes.
 
 **Interesting Aggregates**
+
 |   equipment failure |   fuel supply emergency |   intentional attack |   islanding |   public appeal |   severe weather |   system operability disruption |
 |--------------------:|------------------------:|---------------------:|------------:|----------------:|-----------------:|--------------------------------:|
-|             nan     |                     nan |                nan   |         nan |         nan     |          3783.33 |                        727.5    |
+|             nan     |                     nan |                nan   |         nan |         nan     |          3783.33 |                        970      |
 |             494     |                     nan |                nan   |         nan |         256.333 |         10140    |                        711.778  |
 |             nan     |                     nan |                nan   |         nan |         nan     |          5991    |                        204.333  |
 |             520.167 |                     nan |               1329.5 |         nan |        1548     |          6299.47 |                       2528.57   |
@@ -87,3 +92,11 @@ This pivot table shows for each year, the average duration of major outages depe
 
 
 # **Assessment of Missingness**
+
+**NMAR Analysis**
+
+One of the columns that is likely NMAR is `DEMAND.LOSS.MW`. While some outages include the amount of electricity demand lost, many do not, and the missingness appears related to the unobserved true value of the column itself. 
+
+The reason why is Utilities often fail to record MW demand loss for outages that affect very few customers, because the impact is small and MW loss is not always measured for minor events. Conversely, for extremely large outages, the MW loss may be difficult to measure precisely during the event, resulting in missing values for the biggest failures. In both situations, the likelihood that DEMAND.LOSS.MW is missing depends directly on the true (unreported) MW loss value — which is the defining characteristic of NMAR.
+
+To convert this missingness into something closer to MAR, we would need additional data about how MW loss is recorded. For example, knowing which utility reported each outage, what measurement equipment was used, and whether MW loss was estimated or manually entered would help determine if the missingness is driven by observable factors rather than the unobserved true value.
