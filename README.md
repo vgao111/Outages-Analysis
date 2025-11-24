@@ -40,8 +40,8 @@ The number of rows in this dataset is 1534, meaning from January 2000 to July 20
 
 1. I started my data cleaning process by creating a copy of the original dataframe, in case If I make any mistakes along the way I can refer back to it again.
 2. I then dropped all columns that are irrelevant to my research question and my analysis. The columns I kept are the same columns displayed in the table above.
-3. I then drop rows where the ==OUTAGE.DURATION== values are 0 or nan because it is highly implausible for a major outage to be 0 minutes of length. I also drop rows with nan ==OUTAGE.DURATION== values because ==OUTAGE.DURATION== is the variable we are trying to predict in the later steps.
-4. Then I convert some columns to their appropiate types as needed. For instance, converting ==PC.REALGSP.STATE== to a column of integer values from string values make sense for easier data manipulation like arithmetics if needed in the future.
+3. I then drop rows where the `OUTAGE.DURATION` values are 0 or nan because it is highly implausible for a major outage to be 0 minutes of length. I also drop rows with nan `OUTAGE.DURATION` values because `OUTAGE.DURATION` is the variable we are trying to predict in the later steps.
+4. Then I convert some columns to their appropiate types as needed. For instance, converting `PC.REALGSP.STATE` to a column of integer values from string values make sense for easier data manipulation like arithmetics if needed in the future.
 
 |   YEAR | U.S._STATE   | CAUSE.CATEGORY     |   DEMAND.LOSS.MW |   CUSTOMERS.AFFECTED | CLIMATE.REGION     |   ANOMALY.LEVEL |   MONTH |   OUTAGE.DURATION |   POPULATION |   POPDEN_URBAN |   POPDEN_RURAL |   AREAPCT_URBAN |   PC.REALGSP.STATE |   TOTAL.PRICE |   TOTAL.CUSTOMERS |   TOTAL.REALGSP | DATE                |
 |-------:|:-------------|:-------------------|-----------------:|---------------------:|:-------------------|----------------:|--------:|------------------:|-------------:|---------------:|---------------:|----------------:|-------------------:|--------------:|------------------:|----------------:|:--------------------|
@@ -60,7 +60,8 @@ The number of rows in this dataset is 1534, meaning from January 2000 to July 20
   height="600"
   frameborder="0"
 ></iframe>
-This univariate plot shows the count of how much major outages occured across every ==YEAR== from 2000 to 2016. You can observe that the year 2011 has the highest count of major outages across the US at 221 and the year 2000 has the lowest count of major outages at just 12 with most of the major outages concentrated in later years.
+
+This univariate plot shows the count of how much major outages occured across every `YEAR` from 2000 to 2016. You can observe that the year 2011 has the highest count of major outages across the US at 221 and the year 2000 has the lowest count of major outages at just 12 with most of the major outages concentrated in later years.
 
 **Bivariate Analysis**
 <iframe
@@ -69,6 +70,20 @@ This univariate plot shows the count of how much major outages occured across ev
   height="600"
   frameborder="0"
 ></iframe>
-This bivariate plot shows the average ==OUTAGE.DURATION== per ==CAUSE.CATEGORY==. We can see that if ==CAUSE.CATEGORY== was fuel supply emergency, it would have the highest average 
-==OUTAGE.DURATION== at around 13,484 minutes and if it was islanding, it would have the lowest average ==OUTAGE.DURATION== at around 200 minutes.
 
+This bivariate plot shows the average `OUTAGE.DURATION` per `CAUSE.CATEGORY`. We can see that if `CAUSE.CATEGORY` was fuel supply emergency, it would have the highest average 
+`OUTAGE.DURATION` at around 13,484 minutes and if it was islanding, it would have the lowest average `OUTAGE.DURATION` at around 200 minutes.
+
+**Interesting Aggregates**
+|   equipment failure |   fuel supply emergency |   intentional attack |   islanding |   public appeal |   severe weather |   system operability disruption |
+|--------------------:|------------------------:|---------------------:|------------:|----------------:|-----------------:|--------------------------------:|
+|             nan     |                     nan |                nan   |         nan |         nan     |          3783.33 |                        727.5    |
+|             494     |                     nan |                nan   |         nan |         256.333 |         10140    |                        711.778  |
+|             nan     |                     nan |                nan   |         nan |         nan     |          5991    |                        204.333  |
+|             520.167 |                     nan |               1329.5 |         nan |        1548     |          6299.47 |                       2528.57   |
+|             268.4   |                     nan |                nan   |         nan |        3559.29  |          5064.96 |                         96.3333 |
+
+This pivot table shows for each year, the average duration of major outages depending on the cause of the outage.
+
+
+# **Assessment of Missingness**
