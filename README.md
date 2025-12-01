@@ -44,6 +44,8 @@ The number of rows in this dataset is 1534, meaning from January 2000 to July 20
 3. I then drop rows where the `OUTAGE.DURATION` values are 0 or nan because it is highly implausible for a major outage to be 0 minutes of length. I also drop rows with nan `OUTAGE.DURATION` values because `OUTAGE.DURATION` is the variable we are trying to predict in the later steps.
 4. Then I convert some columns to their appropiate types as needed. For instance, converting `PC.REALGSP.STATE` to a column of integer values from string values make sense for easier data manipulation like arithmetics if needed in the future.
 
+<div style="overflow-x: auto; width: 100%;">
+
 |   YEAR | U.S._STATE   | CAUSE.CATEGORY     |   DEMAND.LOSS.MW |   CUSTOMERS.AFFECTED | CLIMATE.REGION     |   ANOMALY.LEVEL |   MONTH |   OUTAGE.DURATION |   POPULATION |   POPDEN_URBAN |   POPDEN_RURAL |   AREAPCT_URBAN |   PC.REALGSP.STATE |   TOTAL.PRICE |   TOTAL.CUSTOMERS |   TOTAL.REALGSP | DATE                |
 |-------:|:-------------|:-------------------|-----------------:|---------------------:|:-------------------|----------------:|--------:|------------------:|-------------:|---------------:|---------------:|----------------:|-------------------:|--------------:|------------------:|----------------:|:--------------------|
 |   2011 | Minnesota    | severe weather     |              nan |                70000 | East North Central |            -0.3 |       7 |              3060 |      5348119 |           2279 |           18.2 |            2.14 |              51268 |          9.28 |           2595696 |          274182 | 2011-07-01 00:00:00 |
@@ -52,6 +54,7 @@ The number of rows in this dataset is 1534, meaning from January 2000 to July 20
 |   2012 | Minnesota    | severe weather     |              nan |                68200 | East North Central |            -0.1 |       6 |              2550 |      5380443 |           2279 |           18.2 |            2.14 |              51598 |          9.19 |           2606813 |          277627 | 2012-06-01 00:00:00 |
 |   2015 | Minnesota    | severe weather     |              250 |               250000 | East North Central |             1.2 |       7 |              1740 |      5489594 |           2279 |           18.2 |            2.14 |              54431 |         10.43 |           2673531 |          292023 | 2015-07-01 00:00:00 |
 
+</div>
 
 ## **Exploratory Data Analysis**
 
@@ -181,17 +184,13 @@ My observed TVD is 978.3 which seems to be on the extreme right end of the simul
 
 # **Framing a Prediction Problem**
 
-I will be trying to predict the `OUTAGE.DURATION`, the response variable, based on several key features available in my dataset. This will be a regression model. I chose `OUTAGE.DURATION` as my response variable because the goal of my project is to understand the factors that influence how long a major outage lasts, and to build a model that can predict outage duration at the time anoutage occurs. Outage duration is a continuous numerical variable, which makes this problem well-suited for regression. Predicting outage duration is also operationally important for utilities, as more accurate duration estimates allow for better crew allocation and improved customer satisfaction.
+I will be trying to predict the `OUTAGE.DURATION`, my response variable, based on several key features available in my dataset. This will be a regression model. I chose `OUTAGE.DURATION` as my response variable because the goal of my project is to understand the factors that influence how long a major outage lasts, and to build a model that can predict outage duration at the time anoutage occurs. Outage duration is a continuous numerical variable, which makes this problem well-suited for regression. Predicting outage duration is also operationally important for utilities, as more accurate duration estimates allow for better crew allocation and improved customer satisfaction.
 
 The metric that I will be using to evaluate my model is **Mean Absolute Error (MAE)** because my data is continuous so it does not make sense to use F1-score or any metric used for categorical data. Also when comparing RMSE to MAE, MAE is better in minimizing the effects of outliers and in my case, in which almost 10% of my outage durations are outliers (from IQR rule) after dropping null values.
 
 Additionally, I will only be using features typically available at the time of prediction. For example I would not use features like `DEMAND.LOSS.MW` because it is impossible to know the estimated electricity demand lost during the outage until after the outage where you have measured the results. 
 
 # **Baseline Model**
-
-Describe your model and state the features in your model, including how many are quantitative, ordinal, and nominal, and how you performed any necessary encodings. Report the performance of your model and whether or not you believe your current model is "good" and why.
-
-Tip: Make sure to hit all of the points above: many projects in the past have lost points for not doing so.
 
 My baseline model is a multiple linear regression model that uses two features, `CAUSE.CATEGORY` and `MONTH`. These two features are well known at the time of prediction and so they are valid features. `MONTH` is a quantitative feature so I will not need to transform it. However, `CAUSE.CATEGORY` is a categorical feature and thus I will need to one-hot encode it to make it numerical. The mean absolute error (MAE) for my baseline model is roughly **2618.72**. I believe this model is a solid start but will definitely need improvements ((#explain why))
 
