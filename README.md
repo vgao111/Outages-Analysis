@@ -63,19 +63,19 @@ The number of rows in this dataset is 1534, meaning from January 2000 to July 20
 <iframe
   src="assets/outages-per-year.html"
   width="800"
-  height="600"
+  height="400"
   frameborder="0"
-></iframe> This univariate plot shows the count of how much major outages occured across every `YEAR` from 2000 to 2016. You can observe that the year 2011 has the highest count of major outages across the US at 221 and the year 2000 has the lowest count of major outages at just 12 with most of the major outages concentrated in later years.
+></iframe> 
+This univariate plot shows the count of how much major outages occured across every `YEAR` from 2000 to 2016. You can observe that the year 2011 has the highest count of major outages across the US at 221 and the year 2000 has the lowest count of major outages at just 12 with most of the major outages concentrated in later years.
 
 
 **Bivariate Analysis**
 <iframe
   src="assets/average-per-category.html"
   width="800"
-  height="600"
+  height="400"
   frameborder="0"
 ></iframe>
-
 This bivariate plot shows the average `OUTAGE.DURATION` per `CAUSE.CATEGORY`. We can see that if `CAUSE.CATEGORY` was fuel supply emergency, it would have the highest average 
 `OUTAGE.DURATION` at around 13,484 minutes and if it was islanding, it would have the lowest average `OUTAGE.DURATION` at around 200 minutes.
 
@@ -112,19 +112,17 @@ Here is the distribution of `MONTH` When `OUTAGE.DURATION` is Missing vs Not Mis
 <iframe
   src="assets/1A.html"
   width="800"
-  height="600"
+  height="400"
   frameborder="0"
 ></iframe>
-
 Here is the observed tvd paired against the simulated TVD under a permutation test.
 
 <iframe
   src="assets/1B.html"
   width="800"
-  height="600"
+  height="400"
   frameborder="0"
 ></iframe>
-
 This plot shows that my observed TVD statistic was 0.223 with a p-value of 0.122. At this p-value, which is greater than 0.05, I will fail to reject the null hypothesis hypothesis
 meaning that there is a more likelihood of the distribution of MONTH being the same when OUTAGE.DURATION is missing vs not missing, therefore the missingness is most likely not **MAR**.
 
@@ -136,7 +134,7 @@ Here is the distribution of `ANOMALY.LEVEL` Bins When `DEMAND.LOSS.MW` Missing v
 <iframe
   src="assets/2A.html"
   width="800"
-  height="600"
+  height="400"
   frameborder="0"
 ></iframe>
 
@@ -146,10 +144,9 @@ Here is the observed tvd paired against the simulated TVD under a permutation te
 <iframe
   src="assets/2B.html"
   width="800"
-  height="600"
+  height="400"
   frameborder="0"
 ></iframe>
-
 This plot shows that my observed TVD statistic was 0.092 with a p-value of 0.002. At this p-value, which is less than 0.05, I will reject the null hypothesis in favor of the alternative hypothesis
 meaning that there is a more likelihood of the distribution of anomalies being different when MW loss is missing vs not missing, there the missingness is most likely **MAR**.
 
@@ -173,10 +170,9 @@ This will be my null and alternative hypotheses:
 <iframe
   src="assets/hypothesis-test.html"
   width="800"
-  height="600"
+  height="400"
   frameborder="0"
 ></iframe>
-
 My observed TVD is 978.3 which seems to be on the extreme right end of the simulated TVDS. Since our p-value of 0.0005 is so small and is less than our significance level of 0.05, we reject the null hypothesis, meaning there is statisically significant evidence that point in favor of the alternative hypotheis, the fact that on average, the outage duration is greater for low per capita real GSP states than for high per capita real GSP states is more likely.
 
 
