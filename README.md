@@ -186,20 +186,16 @@ Additionally, I will only be using features typically available at the time of p
 
 # **Baseline Model**
 
-My baseline model is a multiple linear regression model that uses two features, `CAUSE.CATEGORY` and `MONTH`. These two features are well known at the time of prediction and so they are valid features. `MONTH` is a quantitative feature so I will not need to transform it. However, `CAUSE.CATEGORY` is a categorical feature and thus I will need to one-hot encode it to make it numerical. The mean absolute error (MAE) for my baseline model is roughly **2618.72**. I believe this model is a solid start but will definitely need improvements ((#explain why))
-
+My baseline model is a multiple linear regression model that uses two features, `CAUSE.CATEGORY` and `MONTH`. These two features are well known at the time of prediction and so they are valid features. `MONTH` is a quantitative feature so I will not need to transform it. However, `CAUSE.CATEGORY` is a categorical feature and thus I will need to one-hot encode it to make it numerical. The mean absolute error (MAE) for my baseline model is roughly **2618.72**. I believe this model is a solid start but will definitely need improvements as it is not final. The features for this baseline model are based off my intuition of what I believe would be best features for predicting `OUTAGE.DURATION` and there may be some better features mathematically.
 
 
 # **Final Model**
 
+My final model incorporated the features `MONTH`, `CAUSE.CATEGORY`, `CLIMATE.REGION`, and a binarized version of `PC.REALGSP.STATE`. I used a Random Forest Regressor and evaluated performance using Mean Absolute Error (MAE). The tuned model achieved a test MAE of approximately 2391 minutes, improving upon the baseline model’s MAE of approximately 2619 minutes.
 
+I added `CLIMATE.REGION` (nominal) because different regions of the United States experience distinct climate patterns and infrastructure conditions that can affect restoration time, even for outages with similar causes. I also added `PC.REALGSP.STATE`, which I binarized into high and low-GSP states using a threshold of 50,000. I chose this feature because economic capacity of certain states could certainly affect response time as states that have a higher GSP might have more investments into infrastructure and emergency crews, leading to lower `OUTAGE.DURATION`.
 
-
-
-
-
-
-
-
+I used GridSearchCV with 5-fold cross-validation. The best-performing parameters were n_estimators = 200, max_depth = 10, min_samples_leaf = 5, and max_features = 0.5. The decrease in MAE from the baseline to the final model indicates that incorporating regional and economic context, along with a nonlinear modeling approach, led to improved predictive performance.
 
 # **Fairness Analysis**
+
